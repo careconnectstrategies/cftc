@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Recipe for Success — Cooking for the Crowd</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,400;0,600;0,700;1,400&family=Satisfy&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --blueberry: #1C3FAA;
+    --blueberry-deep: #093F7C;
+    --raspberry: #C81D4A;
+    --raspberry-bright: #FF3F48;
+    --herb: #3FAE51;
+    --herb-bright: #57EE31;
+    --lemon: #F5D444;
+    --orange: #F77F00;
+    --black: #000000;
+    --white: #FFFFFF;
+    --sky: #E6F4FA;
+    --light-gray: #EFEFEF;
+    --dark-gray: #999999;
+  }
+
+  * { box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    margin: 0;
+    font-family: 'Open Sans', Arial, sans-serif;
+    color: var(--black);
+    background: var(--white);
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  a { color: var(--blueberry); }
+
+  /* ============ HEADER ============ */
+  .site-header {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: var(--white);
+    border-bottom: 1px solid var(--light-gray);
+  }
+  .header-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 12px 24px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+  /* --- Logo placeholder: replace the <svg> below with your real logo <img> --- */
+  .logo {
+    flex: 0 0 auto;
+    display: flex;
+    align-items: center;
+  }
+  .logo svg { display: block; width: 64px; height: 64px; }
+
+  .main-nav {
+    flex: 1 1 auto;
+    display: flex;
+    justify-content: center;
+    gap: 32px;
+  }
+  .main-nav a {
+    text-decoration: none;
+    color: var(--blueberry);
+    font-weight: 700;
+    font-size: 1.02rem;
+    white-space: nowrap;
+  }
+  .main-nav a:hover { color: var(--blueberry-deep); }
+
+  .support-btn {
+    flex: 0 0 auto;
+    background: var(--raspberry);
+    color: var(--white);
+    text-decoration: none;
+    font-weight: 700;
+    padding: 12px 26px;
+    border-radius: 999px;
+    font-size: 1rem;
+    white-space: nowrap;
+  }
+  .support-btn:hover { background: #a8153c; }
+
+  .nav-toggle {
+    display: none;
+    flex: 0 0 auto;
+    margin-left: auto;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 8px;
+  }
+  .nav-toggle span {
+    display: block;
+    width: 26px; height: 3px;
+    background: var(--blueberry);
+    border-radius: 2px;
+    margin: 5px 0;
+  }
+
+  /* ============ BANNER ============ */
+  .banner {
+    /* Replace the gradient below with your leafy greens photo:
+       background: url('YOUR_IMAGE_URL') center/cover no-repeat; */
+    background: linear-gradient(135deg, #4e8a2e 0%, #7bc043 50%, #4e8a2e 100%);
+    position: relative;
+    display: flex;
+    align-items: center;
+    min-height: 150px;
+  }
+  .banner-band {
+    width: 100%;
+    background: linear-gradient(90deg, var(--orange) 0%, var(--lemon) 100%);
+    padding: 22px 24px;
+    text-align: center;
+  }
+  .banner-band h1 {
+    margin: 0;
+    color: var(--white);
+    font-weight: 700;
+    font-size: clamp(2rem, 6vw, 3.4rem);
+    text-shadow: 0 1px 4px rgba(0,0,0,0.18);
+    letter-spacing: -0.5px;
+  }
+
+  /* ============ INTRO ============ */
+  .intro {
+    max-width: 880px;
+    margin: 0 auto;
+    padding: 40px 24px 8px;
+  }
+  .intro p {
+    font-size: clamp(1.05rem, 2.4vw, 1.35rem);
+    margin: 0 0 18px;
+  }
+
+  /* ============ CALCULATOR ============ */
+  .calc-wrap {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 20px 24px 56px;
+  }
+  .card {
+    background: var(--white);
+    border: 1px solid var(--light-gray);
+    border-radius: 12px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.08), 0 4px 16px rgba(0,0,0,0.08);
+    padding: 32px 28px;
+  }
+
+  .step { margin-bottom: 26px; }
+  .qlabel {
+    display: flex;
+    align-items: flex-start;
+    font-weight: 600;
+    color: var(--blueberry);
+    font-size: 1.08rem;
+    margin-bottom: 6px;
+  }
+  .qnum {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 26px; height: 26px;
+    border-radius: 50%;
+    background: var(--blueberry);
+    color: var(--white);
+    font-size: 0.85rem;
+    font-weight: 700;
+    margin-right: 10px;
+    flex: 0 0 auto;
+  }
+  .qopt { font-weight: 400; color: var(--dark-gray); margin-left: 4px; }
+  .qhint { color: var(--dark-gray); font-size: 0.9rem; margin: 0 0 12px 36px; }
+
+  .budget-row { margin-left: 36px; max-width: 280px; }
+  .input-money { position: relative; display: flex; align-items: center; }
+  .input-money span {
+    position: absolute; left: 14px;
+    font-weight: 600; color: var(--black); font-size: 1.05rem;
+  }
+  .input-money input {
+    width: 100%;
+    padding: 12px 14px 12px 30px;
+    font-family: inherit; font-size: 1.05rem;
+    color: var(--blueberry); font-weight: 600;
+    border: 1px solid var(--light-gray);
+    border-radius: 8px; outline: none;
+    transition: border-color .15s;
+  }
+  .input-money input:focus { border-color: var(--blueberry); }
+
+  .choices { display: flex; gap: 12px; margin-left: 36px; flex-wrap: wrap; }
+  .choice {
+    flex: 1 1 130px; min-width: 120px;
+    padding: 12px 16px;
+    font-family: inherit; font-size: 1rem; font-weight: 600;
+    color: var(--blueberry); background: var(--white);
+    border: 1.5px solid var(--blueberry); border-radius: 8px;
+    cursor: pointer; transition: all .15s; text-align: center;
+  }
+  .choice:hover { background: var(--sky); }
+  .choice.selected { background: var(--blueberry); color: var(--white); }
+
+  .step.hidden { display: none; }
+
+  .cta-row { margin-top: 30px; text-align: center; }
+  .btn-primary {
+    display: inline-block;
+    background: linear-gradient(180deg, var(--blueberry) 0%, var(--blueberry-deep) 100%);
+    color: var(--white);
+    font-family: inherit; font-weight: 700; font-size: 1.1rem;
+    border: none; border-radius: 8px;
+    padding: 15px 38px; cursor: pointer;
+    transition: opacity .15s;
+  }
+  .btn-primary:hover { opacity: 0.92; }
+  .btn-primary:disabled { opacity: 0.45; cursor: not-allowed; }
+
+  .result { margin-top: 26px; display: none; }
+  .result.show { display: block; animation: fade .35s ease; }
+  @keyframes fade { from { opacity: 0; transform: translateY(8px);} to {opacity:1; transform:none;} }
+
+  .result-card { border-radius: 12px; padding: 30px 28px; text-align: center; }
+  .result-savings {
+    background: linear-gradient(180deg, var(--herb-bright) 0%, var(--herb) 100%);
+    color: var(--white);
+  }
+  .result-savings .reslabel {
+    font-weight: 600; text-transform: uppercase; letter-spacing: 1px;
+    font-size: 0.85rem; margin: 0; opacity: 0.95;
+  }
+  .result-savings .resbig {
+    font-weight: 700; font-size: clamp(2.4rem, 8vw, 3.4rem);
+    margin: 6px 0 2px; line-height: 1;
+  }
+  .result-savings .ressub { margin: 0; font-size: 0.95rem; opacity: 0.95; }
+  .result-title {
+    font-family: 'Satisfy', cursive; color: var(--white);
+    font-size: 1.6rem; margin: 0 0 4px;
+  }
+
+  .pricing { background: var(--sky); border-radius: 12px; padding: 22px 24px; margin-top: 14px; }
+  .pricing h3 { color: var(--blueberry); font-size: 1.05rem; margin: 0 0 14px; font-weight: 700; }
+  .pricing-grid { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+  .pricetag {
+    background: var(--white); border: 1px solid var(--light-gray);
+    border-radius: 10px; padding: 16px 22px; min-width: 150px;
+  }
+  .pricetag .amt { color: var(--blueberry); font-weight: 700; font-size: 1.7rem; line-height: 1; }
+  .pricetag .desc { color: var(--black); font-size: 0.9rem; margin-top: 4px; }
+  .closer { margin-top: 16px; font-weight: 600; color: var(--blueberry); font-size: 1.05rem; }
+
+  .result-note {
+    background: var(--white); border: 1px solid var(--light-gray);
+    border-left: 4px solid var(--orange); border-radius: 10px;
+    padding: 24px 26px; text-align: left;
+  }
+  .result-note h3 { color: var(--blueberry); margin: 0 0 10px; font-size: 1.15rem; }
+  .result-note p { margin: 0; color: var(--black); }
+
+  .contact-line { text-align: center; margin-top: 18px; font-size: 0.95rem; color: var(--black); }
+  .contact-line a { font-weight: 600; text-decoration: none; }
+  .contact-line a:hover { text-decoration: underline; }
+
+  .restart {
+    display: block; margin: 22px auto 0;
+    background: none; border: none; color: var(--dark-gray);
+    font-family: inherit; font-size: 0.9rem; cursor: pointer; text-decoration: underline;
+  }
+  .restart:hover { color: var(--blueberry); }
+
+  /* ============ FOOTER ============ */
+  .footer-cta {
+    background: linear-gradient(180deg, var(--blueberry) 0%, var(--blueberry-deep) 100%);
+    padding: 44px 24px;
+  }
+  .newsletter {
+    max-width: 920px; margin: 0 auto;
+    background: var(--white); border-radius: 14px;
+    padding: 28px 32px;
+    display: flex; align-items: center; gap: 28px; flex-wrap: wrap;
+  }
+  .newsletter-text { flex: 1 1 320px; }
+  .newsletter-text h2 { color: var(--blueberry); margin: 0 0 8px; font-size: 1.5rem; font-weight: 700; }
+  .newsletter-text p { margin: 0; color: var(--black); font-size: 1.02rem; }
+  .signup-btn {
+    flex: 0 0 auto;
+    background: var(--raspberry); color: var(--white);
+    text-decoration: none; font-weight: 700; font-size: 1.05rem;
+    padding: 14px 38px; border-radius: 999px; border: none; cursor: pointer;
+  }
+  .signup-btn:hover { background: #a8153c; }
+
+  .footer-bottom { padding: 32px 24px 28px; text-align: center; }
+  .footer-bottom .legal {
+    max-width: 720px; margin: 0 auto 22px;
+    color: var(--black); font-size: 0.98rem;
+  }
+  .socials { display: flex; justify-content: center; gap: 14px; margin-bottom: 18px; }
+  .socials a {
+    width: 40px; height: 40px; border-radius: 50%;
+    background: var(--black); color: var(--white);
+    display: inline-flex; align-items: center; justify-content: center;
+  }
+  .socials a:hover { background: var(--blueberry); }
+  .socials svg { width: 20px; height: 20px; fill: currentColor; }
+  .copyright { color: var(--dark-gray); font-size: 0.9rem; margin: 0; }
+
+  /* ============ RESPONSIVE ============ */
+  @media (max-width: 860px) {
+    .nav-toggle { display: block; order: 3; }
+    .support-btn { order: 2; padding: 10px 20px; }
+    .main-nav {
+      order: 4;
+      flex-basis: 100%;
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+      padding: 16px 0 4px;
+    }
+    .main-nav.open { display: flex; }
+    .header-inner { flex-wrap: wrap; }
+    .logo { margin-right: auto; }
+    .newsletter { justify-content: center; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+  <!-- ============ HEADER ============ -->
+  <header class="site-header">
+    <div class="header-inner">
+      <!-- LOGO PLACEHOLDER — swap this <a> contents for: <img src="YOUR_LOGO_URL" alt="Cooking for the Crowd"> -->
+      <a class="logo" href="#" aria-label="Cooking for the Crowd home">
+        <svg viewBox="0 0 100 100" role="img" aria-hidden="true">
+          <circle cx="50" cy="50" r="46" fill="none" stroke="#000" stroke-width="3"/>
+          <circle cx="50" cy="50" r="38" fill="none" stroke="#000" stroke-width="1.5"/>
+          <line x1="34" y1="32" x2="66" y2="68" stroke="#000" stroke-width="4" stroke-linecap="round"/>
+          <line x1="66" y1="32" x2="34" y2="68" stroke="#000" stroke-width="4" stroke-linecap="round"/>
+          <text x="50" y="46" text-anchor="middle" font-family="Open Sans, Arial" font-size="11" font-weight="700" fill="#000">COOKING</text>
+          <text x="50" y="62" text-anchor="middle" font-family="Open Sans, Arial" font-size="11" font-weight="700" fill="#000">CROWD</text>
+        </svg>
+      </a>
+
+      <nav class="main-nav" id="mainNav">
+        <a href="#">Home</a>
+        <a href="#">Our Services</a>
+        <a href="#">About Us</a>
+        <a href="#">Mission in Action</a>
+        <a href="#">Contact</a>
+      </nav>
+
+      <a class="support-btn" href="#">Support Us</a>
+
+      <button class="nav-toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <!-- ============ BANNER ============ -->
+  <section class="banner">
+    <div class="banner-band">
+      <h1>Recipe for Success</h1>
+    </div>
+  </section>
+
+  <!-- ============ INTRO ============ -->
+  <section class="intro">
+    <p>Cooking For The Crowd delivers healthy, restaurant-quality meals at up to 40% lower cost than traditional catering &mdash; while saving your staff up to 30 hours per week.</p>
+    <p>Take this quick quiz to see your potential savings as a CFTC client.</p>
+  </section>
+
+  <!-- ============ CALCULATOR ============ -->
+  <section class="calc-wrap">
+    <div class="card" aria-label="Savings calculator">
+
+      <div class="step" id="step1">
+        <div class="qlabel"><span class="qnum">1</span> What's your annual meal budget? <span class="qopt">(optional)</span></div>
+        <p class="qhint">Leave blank to use a $10,000 estimate.</p>
+        <div class="budget-row">
+          <div class="input-money">
+            <span>$</span>
+            <input type="text" inputmode="numeric" id="budget" placeholder="10,000" aria-label="Annual meal budget in dollars" />
+          </div>
+        </div>
+      </div>
+
+      <div class="step" id="step2">
+        <div class="qlabel"><span class="qnum">2</span> Are you a nonprofit or community organization?</div>
+        <div class="choices">
+          <button class="choice" data-q="2" data-val="yes">Yes</button>
+          <button class="choice" data-q="2" data-val="no">No</button>
+        </div>
+      </div>
+
+      <div class="step hidden" id="step3">
+        <div class="qlabel"><span class="qnum">3</span> Do you work with financially marginalized communities?</div>
+        <div class="choices">
+          <button class="choice" data-q="3" data-val="yes">Yes</button>
+          <button class="choice" data-q="3" data-val="no">No</button>
+        </div>
+      </div>
+
+      <div class="cta-row">
+        <button class="btn-primary" id="calcBtn" disabled>See My Savings</button>
+      </div>
+
+      <div class="result" id="result" aria-live="polite"></div>
+
+    </div>
+  </section>
+
+  <!-- ============ FOOTER ============ -->
+  <section class="footer-cta">
+    <div class="newsletter">
+      <div class="newsletter-text">
+        <h2>Join our newsletter!</h2>
+        <p>Brighten your day with heartwarming stories, volunteer spotlights, and amazing recipes for YOUR crowd.</p>
+      </div>
+      <!-- Link this to your real signup form -->
+      <a class="signup-btn" href="#">SIGN UP</a>
+    </div>
+  </section>
+
+  <footer class="footer-bottom">
+    <p class="legal">Cooking for the Crowd is a 501(c)(3) nonprofit, a charity catering service providing meals to organizations which serve an impoverished population, EIN 84-4901934.</p>
+    <div class="socials">
+      <!-- Replace href="#" with your real profile links -->
+      <a href="#" aria-label="Instagram"><svg viewBox="0 0 24 24"><path d="M12 2.2c3.2 0 3.6 0 4.9.07 1.17.05 1.8.25 2.23.41.56.22.96.48 1.38.9.42.42.68.82.9 1.38.16.42.36 1.06.41 2.23.06 1.27.07 1.65.07 4.86s0 3.6-.07 4.86c-.05 1.17-.25 1.8-.41 2.23a3.7 3.7 0 0 1-.9 1.38 3.7 3.7 0 0 1-1.38.9c-.42.16-1.06.36-2.23.41-1.27.06-1.65.07-4.86.07s-3.6 0-4.86-.07c-1.17-.05-1.8-.25-2.23-.41a3.7 3.7 0 0 1-1.38-.9 3.7 3.7 0 0 1-.9-1.38c-.16-.42-.36-1.06-.41-2.23C2.21 15.6 2.2 15.2 2.2 12s0-3.6.07-4.86c.05-1.17.25-1.8.41-2.23.22-.56.48-.96.9-1.38.42-.42.82-.68 1.38-.9.42-.16 1.06-.36 2.23-.41C8.46 2.21 8.84 2.2 12 2.2zm0 1.8c-3.15 0-3.5.01-4.74.07-.9.04-1.38.19-1.71.32-.43.17-.74.37-1.06.69-.32.32-.52.63-.69 1.06-.13.33-.28.81-.32 1.71C3.41 8.5 3.4 8.85 3.4 12s.01 3.5.07 4.74c.04.9.19 1.38.32 1.71.17.43.37.74.69 1.06.32.32.63.52 1.06.69.33.13.81.28 1.71.32 1.24.06 1.59.07 4.74.07s3.5-.01 4.74-.07c.9-.04 1.38-.19 1.71-.32.43-.17.74-.37 1.06-.69.32-.32.52-.63.69-1.06.13-.33.28-.81.32-1.71.06-1.24.07-1.59.07-4.74s-.01-3.5-.07-4.74c-.04-.9-.19-1.38-.32-1.71a2.85 2.85 0 0 0-.69-1.06 2.85 2.85 0 0 0-1.06-.69c-.33-.13-.81-.28-1.71-.32C15.5 4.01 15.15 4 12 4zm0 3.06A4.94 4.94 0 1 1 12 16.94 4.94 4.94 0 0 1 12 7.06zm0 1.8a3.14 3.14 0 1 0 0 6.28 3.14 3.14 0 0 0 0-6.28zm5.16-3.24a1.16 1.16 0 1 1 0 2.32 1.16 1.16 0 0 1 0-2.32z"/></svg></a>
+      <a href="#" aria-label="Facebook"><svg viewBox="0 0 24 24"><path d="M13.5 21v-8h2.7l.4-3.1h-3.1V7.9c0-.9.25-1.5 1.55-1.5h1.65V3.6c-.29-.04-1.28-.12-2.42-.12-2.4 0-4.05 1.47-4.05 4.17V9.9H7.5V13h2.7v8h3.3z"/></svg></a>
+      <a href="#" aria-label="LinkedIn"><svg viewBox="0 0 24 24"><path d="M6.94 7.5a1.94 1.94 0 1 1 0-3.88 1.94 1.94 0 0 1 0 3.88zM5.2 20.5h3.5V9.25H5.2V20.5zM10.8 9.25h3.36v1.54h.05c.47-.84 1.6-1.73 3.3-1.73 3.53 0 4.19 2.2 4.19 5.05v6.39H18.2v-5.66c0-1.35-.02-3.08-1.96-3.08-1.96 0-2.26 1.46-2.26 2.98v5.76h-3.18V9.25z"/></svg></a>
+      <a href="#" aria-label="TikTok"><svg viewBox="0 0 24 24"><path d="M16.5 3c.3 2.1 1.5 3.6 3.5 3.9v2.5c-1.3.1-2.5-.2-3.6-.9v5.7c0 2.9-2.1 5.3-5 5.3s-5-2.4-5-5.3 2.1-5.3 5-5.3c.3 0 .6 0 .9.08v2.6c-.3-.1-.6-.15-.9-.15-1.5 0-2.6 1.2-2.6 2.7s1.1 2.7 2.6 2.7 2.6-1.2 2.6-2.7V3h2.5z"/></svg></a>
+      <a href="#" aria-label="Telegram"><svg viewBox="0 0 24 24"><path d="M21.5 4.3 2.9 11.5c-.9.36-.9.86-.16 1.08l4.75 1.48 1.84 5.66c.22.6.4.83.83.83.43 0 .6-.2.83-.6l2.3-3.55 4.78 3.53c.88.48 1.5.23 1.72-.81l3.1-14.6c.32-1.28-.48-1.86-1.32-1.5z"/></svg></a>
+    </div>
+    <p class="copyright">&copy;2026 Cooking for the Crowd</p>
+  </footer>
+
+<script>
+  (function () {
+    var state = { q2: null, q3: null };
+
+    var budgetInput = document.getElementById('budget');
+    var step3 = document.getElementById('step3');
+    var calcBtn = document.getElementById('calcBtn');
+    var result = document.getElementById('result');
+
+    // Mobile nav toggle
+    var navToggle = document.getElementById('navToggle');
+    var mainNav = document.getElementById('mainNav');
+    navToggle.addEventListener('click', function () {
+      var open = mainNav.classList.toggle('open');
+      navToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+    });
+
+    // Budget thousands separators
+    budgetInput.addEventListener('input', function () {
+      var digits = budgetInput.value.replace(/[^0-9]/g, '');
+      budgetInput.value = digits ? Number(digits).toLocaleString('en-US') : '';
+    });
+
+    // Choice buttons
+    document.querySelectorAll('.choice').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var q = btn.getAttribute('data-q');
+        var val = btn.getAttribute('data-val');
+
+        document.querySelectorAll('.choice[data-q="' + q + '"]').forEach(function (b) {
+          b.classList.remove('selected');
+        });
+        btn.classList.add('selected');
+
+        if (q === '2') {
+          state.q2 = val;
+          state.q3 = null;
+          document.querySelectorAll('.choice[data-q="3"]').forEach(function (b) { b.classList.remove('selected'); });
+          if (val === 'yes') { step3.classList.remove('hidden'); }
+          else { step3.classList.add('hidden'); }
+        } else if (q === '3') {
+          state.q3 = val;
+        }
+        updateButton();
+      });
+    });
+
+    function updateButton() {
+      var ready = (state.q2 === 'no') || (state.q2 === 'yes' && state.q3 !== null);
+      calcBtn.disabled = !ready;
+    }
+
+    function getBudget() {
+      var digits = budgetInput.value.replace(/[^0-9]/g, '');
+      var n = parseInt(digits, 10);
+      return (isNaN(n) || n <= 0) ? 10000 : n;
+    }
+
+    function money(n) { return '$' + Math.round(n).toLocaleString('en-US'); }
+
+    calcBtn.addEventListener('click', function () {
+      var html = '';
+
+      if (state.q2 === 'no') {
+        html =
+          '<div class="result-note">' +
+            '<h3>A win-win for your large-group catering</h3>' +
+            '<p>CFTC provides a double benefit for your large-group catering: a tax deduction and a great cause to support through your paid meals. ' +
+            'Learn more about this win-win and other ways to support marginalized communities by contacting ' +
+            '<a href="mailto:info@cookingforthecrowd.org">info@cookingforthecrowd.org</a>.</p>' +
+          '</div>';
+      } else {
+        var budget = getBudget();
+        var rate, clientMeal, boardMeal;
+        if (state.q3 === 'yes') { rate = 0.40; clientMeal = 5; boardMeal = 20; }
+        else { rate = 0.20; clientMeal = 10; boardMeal = 25; }
+        var savings = budget * rate;
+        var pct = Math.round(rate * 100);
+
+        html =
+          '<div class="result-card result-savings">' +
+            '<p class="result-title">Here\u2019s your Recipe for Savings.</p>' +
+            '<p class="reslabel">Estimated annual savings</p>' +
+            '<p class="resbig">' + money(savings) + '</p>' +
+            '<p class="ressub">That\u2019s ' + pct + '% of your meal budget back for the people you serve.</p>' +
+          '</div>' +
+          '<div class="pricing">' +
+            '<h3>Your meal pricing as a CFTC client</h3>' +
+            '<div class="pricing-grid">' +
+              '<div class="pricetag"><div class="amt">' + money(clientMeal) + '</div><div class="desc">per client meal</div></div>' +
+              '<div class="pricetag"><div class="amt">' + money(boardMeal) + '</div><div class="desc">per board / staff meal</div></div>' +
+            '</div>' +
+            '<p class="closer">Money &mdash; and time &mdash; back for your mission.</p>' +
+          '</div>' +
+          '<p class="contact-line">Ready to see it for your organization? ' +
+          '<a href="mailto:info@cookingforthecrowd.org">info@cookingforthecrowd.org</a></p>';
+      }
+
+      html += '<button class="restart" id="restartBtn">Start over</button>';
+      result.innerHTML = html;
+      result.classList.add('show');
+      document.getElementById('restartBtn').addEventListener('click', resetAll);
+      result.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    });
+
+    function resetAll() {
+      state = { q2: null, q3: null };
+      budgetInput.value = '';
+      document.querySelectorAll('.choice').forEach(function (b) { b.classList.remove('selected'); });
+      step3.classList.add('hidden');
+      result.classList.remove('show');
+      result.innerHTML = '';
+      calcBtn.disabled = true;
+    }
+  })();
+</script>
+
+</body>
+</html>
