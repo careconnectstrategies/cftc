@@ -133,6 +133,40 @@
     letter-spacing: -0.5px;
   }
 
+  /* ============ SIGNUP STRIP ============ */
+  .signup-strip {
+    background: var(--white);
+    border-bottom: 1px solid var(--light-gray);
+    padding: 18px 24px;
+  }
+  .signup-strip-inner {
+    max-width: 920px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    text-align: center;
+  }
+  .signup-strip-text {
+    font-weight: 600;
+    font-size: 1rem;
+    color: var(--black);
+    margin: 0;
+  }
+  .signup-strip-right {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0;
+  }
+
+  /* ============ BLUE SECTION (intro + calc) ============ */
+  .blue-section {
+    background: linear-gradient(180deg, var(--blueberry) 0%, var(--blueberry-deep) 100%);
+    padding-bottom: 56px;
+  }
+
   /* ============ INTRO ============ */
   .intro {
     max-width: 880px;
@@ -140,15 +174,17 @@
     padding: 40px 24px 8px;
   }
   .intro p {
-    font-size: clamp(1.05rem, 2.4vw, 1.35rem);
+    font-size: clamp(1.05rem, 2.4vw, 1.2rem);
     margin: 0 0 18px;
+    color: rgba(255,255,255,0.95);
+    text-align: center;
   }
 
   /* ============ CALCULATOR ============ */
   .calc-wrap {
     max-width: 760px;
     margin: 0 auto;
-    padding: 20px 24px 56px;
+    padding: 20px 24px 0;
   }
   .card {
     background: var(--white);
@@ -319,7 +355,9 @@
     margin: 0;
     display: none;
   }
-  .signup-msg.success, .signup-msg.error { display: block; margin-top: 6px; }
+  .signup-msg.success, .signup-msg.error { display: block; }
+  .signup-msg.success { color: var(--herb); font-size: 1.05rem; }
+  .signup-msg.error { color: var(--raspberry); margin-top: 6px; }
   .signup-msg.success { color: var(--herb); }
   .signup-msg.error { color: var(--raspberry); }
   .optin-note {
@@ -327,7 +365,7 @@
     text-align: center;
     font-size: 0.8rem;
     color: var(--dark-gray);
-    margin: 0;
+    margin: 6px 0 0;
   }
   .optin-note a { color: var(--dark-gray); text-decoration: underline; }
   .optin-note a:hover { color: var(--blueberry); }
@@ -408,6 +446,24 @@
     </div>
   </section>
 
+  <!-- ============ SIGNUP STRIP ============ -->
+  <section class="signup-strip">
+    <div class="signup-strip-inner">
+      <p class="signup-strip-text">Sign up for catering tips, resources, and special invites.</p>
+      <div class="signup-strip-right">
+        <form class="signup-form" id="signupForm" action="https://formspree.io/f/mjgdzeee" method="POST" novalidate>
+          <input type="email" name="email" id="signupEmail" placeholder="Your email address" required aria-label="Email address" />
+          <button type="submit" class="signup-btn">SIGN UP</button>
+        </form>
+        <p class="signup-msg" id="signupMsg" aria-live="polite"></p>
+        <p class="optin-note">By signing up, you agree to Cooking For The Crowd's <a href="https://www.cookingforthecrowd.org/privacy" target="_blank" rel="noopener noreferrer">privacy policy</a>.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ BLUE SECTION: INTRO + CALCULATOR ============ -->
+  <div class="blue-section">
+
   <!-- ============ INTRO ============ -->
   <section class="intro">
     <p>Cooking For The Crowd delivers healthy, restaurant-quality meals at up to 40% lower cost than traditional catering &mdash; while saving your staff up to 30 hours per week.</p>
@@ -454,20 +510,7 @@
     </div>
   </section>
 
-  <!-- ============ FOOTER ============ -->
-  <section class="footer-cta">
-    <div class="newsletter">
-      <div class="newsletter-text">
-        <p>Sign up for catering tips, resources, and special invites.</p>
-      </div>
-      <form class="signup-form" id="signupForm" action="https://formspree.io/f/mjgdzeee" method="POST" novalidate>
-        <input type="email" name="email" id="signupEmail" placeholder="Your email address" required aria-label="Email address" />
-        <button type="submit" class="signup-btn">SIGN UP</button>
-      </form>
-      <p class="signup-msg" id="signupMsg" aria-live="polite"></p>
-      <p class="optin-note">By signing up, you agree to Cooking For The Crowd's <a href="https://www.cookingforthecrowd.org/privacy" target="_blank" rel="noopener noreferrer">privacy policy</a>.</p>
-    </div>
-  </section>
+  </div><!-- end .blue-section -->
 
   <footer class="footer-bottom">
     <p class="legal">Cooking for the Crowd is a 501(c)(3) nonprofit, a charity catering service providing meals to organizations which serve an impoverished population, EIN 84-4901934.</p>
@@ -618,20 +661,23 @@
           body: JSON.stringify({ email: email })
         });
         if (res.ok) {
+          form.style.display = 'none';
+          document.querySelector('.optin-note').style.display = 'none';
           msg.textContent = "You're in! We'll be in touch.";
           msg.className = 'signup-msg success';
-          form.reset();
         } else {
           var data = await res.json();
           msg.textContent = data.errors ? data.errors.map(function(e){return e.message;}).join(', ') : 'Something went wrong. Please try again.';
           msg.className = 'signup-msg error';
+          btn.disabled = false;
+          btn.textContent = 'SIGN UP';
         }
       } catch (err) {
         msg.textContent = 'Connection error. Please try again.';
         msg.className = 'signup-msg error';
+        btn.disabled = false;
+        btn.textContent = 'SIGN UP';
       }
-      btn.disabled = false;
-      btn.textContent = 'SIGN UP';
     });
   })();
 
