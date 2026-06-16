@@ -292,13 +292,52 @@
     display: flex; align-items: center; gap: 28px; flex-wrap: wrap;
   }
   .newsletter-text { flex: 1 1 320px; }
-  .newsletter-text h2 { color: var(--blueberry); margin: 0 0 8px; font-size: 1.5rem; font-weight: 700; }
-  .newsletter-text p { margin: 0; color: var(--black); font-size: 1.02rem; }
+  .newsletter-text p { margin: 0; color: var(--black); font-size: 1.02rem; font-weight: 600; }
+  .signup-form {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    align-items: center;
+    flex: 0 0 auto;
+  }
+  .signup-form input[type="email"] {
+    padding: 13px 18px;
+    font-family: inherit;
+    font-size: 1rem;
+    border: 1.5px solid var(--light-gray);
+    border-radius: 999px;
+    outline: none;
+    min-width: 220px;
+    transition: border-color .15s;
+  }
+  .signup-form input[type="email"]:focus { border-color: var(--blueberry); }
+  .signup-msg {
+    width: 100%;
+    text-align: center;
+    font-size: 0.95rem;
+    font-weight: 600;
+    margin: 0;
+    display: none;
+  }
+  .signup-msg.success, .signup-msg.error { display: block; margin-top: 6px; }
+  .signup-msg.success { color: var(--herb); }
+  .signup-msg.error { color: var(--raspberry); }
+  .optin-note {
+    width: 100%;
+    text-align: center;
+    font-size: 0.8rem;
+    color: var(--dark-gray);
+    margin: 0;
+  }
+  .optin-note a { color: var(--dark-gray); text-decoration: underline; }
+  .optin-note a:hover { color: var(--blueberry); }
+
   .signup-btn {
     flex: 0 0 auto;
     background: var(--raspberry); color: var(--white);
-    text-decoration: none; font-weight: 700; font-size: 1.05rem;
+    font-family: inherit; font-weight: 700; font-size: 1.05rem;
     padding: 14px 38px; border-radius: 999px; border: none; cursor: pointer;
+    white-space: nowrap;
   }
   .signup-btn:hover { background: #a8153c; }
 
@@ -419,10 +458,14 @@
   <section class="footer-cta">
     <div class="newsletter">
       <div class="newsletter-text">
-        <h2>Join our newsletter!</h2>
-        <p>Brighten your day with heartwarming stories, volunteer spotlights, and amazing recipes for YOUR crowd.</p>
+        <p>Sign up for catering tips, resources, and special invites.</p>
       </div>
-      <a class="signup-btn" href="https://docs.google.com/forms/d/e/1FAIpQLScb8Bkk_oqRegiLV4oxJsTlSFyzQ8q8fjhgHu0KV_CnA0g1pQ/viewform" target="_blank" rel="noopener noreferrer">SIGN UP</a>
+      <form class="signup-form" id="signupForm" action="https://formspree.io/f/mjgdzeee" method="POST" novalidate>
+        <input type="email" name="email" id="signupEmail" placeholder="Your email address" required aria-label="Email address" />
+        <button type="submit" class="signup-btn">SIGN UP</button>
+      </form>
+      <p class="signup-msg" id="signupMsg" aria-live="polite"></p>
+      <p class="optin-note">By signing up, you agree to Cooking For The Crowd's <a href="https://www.cookingforthecrowd.org/privacy" target="_blank" rel="noopener noreferrer">privacy policy</a>.</p>
     </div>
   </section>
 
@@ -553,6 +596,45 @@
       calcBtn.disabled = true;
     }
   })();
+
+  // --- Newsletter signup via Formspree ---
+  (function () {
+    var form = document.getElementById('signupForm');
+    var msg  = document.getElementById('signupMsg');
+    if (!form) return;
+    form.addEventListener('submit', async function (e) {
+      e.preventDefault();
+      var email = document.getElementById('signupEmail').value.trim();
+      if (!email) return;
+      var btn = form.querySelector('button[type="submit"]');
+      btn.disabled = true;
+      btn.textContent = 'Sending…';
+      msg.className = 'signup-msg';
+      msg.textContent = '';
+      try {
+        var res = await fetch(form.action, {
+          method: 'POST',
+          headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email: email })
+        });
+        if (res.ok) {
+          msg.textContent = "You're in! We'll be in touch.";
+          msg.className = 'signup-msg success';
+          form.reset();
+        } else {
+          var data = await res.json();
+          msg.textContent = data.errors ? data.errors.map(function(e){return e.message;}).join(', ') : 'Something went wrong. Please try again.';
+          msg.className = 'signup-msg error';
+        }
+      } catch (err) {
+        msg.textContent = 'Connection error. Please try again.';
+        msg.className = 'signup-msg error';
+      }
+      btn.disabled = false;
+      btn.textContent = 'SIGN UP';
+    });
+  })();
+
 </script>
 
 </body>
